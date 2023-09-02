@@ -1,0 +1,569 @@
+{
+	"info": {
+		"_postman_id": "378f2513-6622-46e6-b099-9ed7de7cd759",
+		"name": "Practise",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29102125",
+		"_collection_link": "https://lively-trinity-508373.postman.co/workspace/Hridee~217cf447-43f8-4966-8459-d9188a9a01a8/collection/29102125-378f2513-6622-46e6-b099-9ed7de7cd759?action=share&source=collection_link&creator=29102125"
+	},
+	"item": [
+		{
+			"name": "Create Booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json()\r",
+							"pm.environment.set(\"id\", jsonData.bookingid)"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var firstName = pm.variables.replaceIn(\"{{$randomFirstName}}\")\r",
+							"console.log(\"First Name Value:  \"+ firstName)\r",
+							"pm.environment.set(\"firstName\",firstName)\r",
+							"\r",
+							"var lastName = pm.variables.replaceIn(\"{{$randomLastName}}\")\r",
+							"console.log(\"Last Name Value:  \"+ lastName)\r",
+							"pm.environment.set(\"lastName\",lastName)\r",
+							"\r",
+							"var price = pm.variables.replaceIn(\"{{$randomInt}}\")\r",
+							"console.log(\"Price Value:  \"+ price)\r",
+							"pm.environment.set(\"price\",price)\r",
+							"\r",
+							"var paid = pm.variables.replaceIn(\"{{$randomBoolean}}\")\r",
+							"console.log(\"Deposit paid Value:  \"+ paid)\r",
+							"pm.environment.set(\"paid\",paid)\r",
+							"\r",
+							"const moment = require('moment')\r",
+							"const today = moment()\r",
+							"console.log(today.format(\"YYYY-MM-DD\"))\r",
+							"pm.environment.set(\"checkin\",today.add(1,'d').format(\"YYYY-MM-DD\"))\r",
+							"\r",
+							"pm.environment.set(\"checkout\",today.add(5,'d').format(\"YYYY-MM-DD\"))\r",
+							"\r",
+							"var needs = pm.variables.replaceIn(\"{{$randomJobArea}}\")\r",
+							"console.log(\"Additional need Value:  \"+ needs)\r",
+							"pm.environment.set(\"needs\",needs)\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"firstname\" : \"{{firstName}}\",\r\n\t\"lastname\" : \"{{lastName}}\",\r\n\t\"totalprice\" : {{price}},\r\n\t\"depositpaid\" : {{paid}},\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"{{checkin}}\",\r\n    \t\"checkout\" : \"{{checkout}}\"\r\n\t},\r\n\t\"additionalneeds\" : \"{{needs}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/booking/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"booking",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var ststuscode = pm.response.code\r",
+							"console.log(ststuscode)\r",
+							"\r",
+							"if(ststuscode==200){\r",
+							"var jsonData = pm.response.json()\r",
+							"pm.test(\"Status code is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var code = pm.response.code\r",
+							"console.log(code)\r",
+							"pm.test(\"Firstname Validate\", function(){\r",
+							"    pm.expect(jsonData.firstname).to.eql(pm.environment.get(\"firstName\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Lastname Validate\", function(){\r",
+							"    pm.expect(jsonData.lastname).to.eql(pm.environment.get(\"lastName\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Price Validate\", function(){\r",
+							"    pm.expect(jsonData.totalprice).to.eql(parseInt(pm.environment.get(\"price\")));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Deposit paid Validate\", function(){\r",
+							"    pm.expect(String(jsonData.depositpaid)).to.eql((pm.environment.get(\"paid\")));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date Validate\", function(){\r",
+							"    pm.expect(jsonData.bookingdates.checkin).to.eql(pm.environment.get(\"checkin\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date Validate\", function(){\r",
+							"    pm.expect(jsonData.bookingdates.checkout).to.eql(pm.environment.get(\"checkout\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Additional Need Validate\", function(){\r",
+							"    pm.expect(jsonData.additionalneeds).to.eql((pm.environment.get(\"needs\")));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==404){\r",
+							"\r",
+							"    pm.test(\"Not Found\", function(){\r",
+							"    pm.response.to.have.status(404);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==200){\r",
+							"\r",
+							"    pm.test(\"OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==201){\r",
+							"\r",
+							"    pm.test(\"Created\", function(){\r",
+							"    pm.response.to.have.status(201);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==202){\r",
+							"\r",
+							"    pm.test(\"Accepted\", function(){\r",
+							"    pm.response.to.have.status(202);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==400){\r",
+							"\r",
+							"    pm.test(\"Bad Request\", function(){\r",
+							"    pm.response.to.have.status(400);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==401){\r",
+							"\r",
+							"    pm.test(\"Unauthorized\", function(){\r",
+							"    pm.response.to.have.status(401);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==403){\r",
+							"\r",
+							"    pm.test(\"Fordidden\", function(){\r",
+							"    pm.response.to.have.status(403);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==405){\r",
+							"\r",
+							"    pm.test(\"Method Not Allowed\", function(){\r",
+							"    pm.response.to.have.status(405);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==500){\r",
+							"\r",
+							"    pm.test(\"Internal Server Error\", function(){\r",
+							"    pm.response.to.have.status(500);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==501){\r",
+							"\r",
+							"    pm.test(\"Not Implimented\", function(){\r",
+							"    pm.response.to.have.status(501);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==502){\r",
+							"\r",
+							"    pm.test(\"Bad Gateway\", function(){\r",
+							"    pm.response.to.have.status(502);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==503){\r",
+							"\r",
+							"    pm.test(\"Service Unavailable\", function(){\r",
+							"    pm.response.to.have.status(503);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else{\r",
+							"    pm.test(\"Something Else!!!!\")\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/booking/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"booking",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var tokendata = pm.response.json()\r",
+							"pm.environment.set(\"token\", tokendata.token)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"username\": \"admin\",\r\n\t\"password\": \"password123\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/auth",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Booking",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var firstName = pm.variables.replaceIn(\"{{$randomFirstName}}\")\r",
+							"console.log(\"First Name Value:  \"+ firstName)\r",
+							"pm.environment.set(\"firstName\",firstName)\r",
+							"\r",
+							"var lastName = pm.variables.replaceIn(\"{{$randomLastName}}\")\r",
+							"console.log(\"Last Name Value:  \"+ lastName)\r",
+							"pm.environment.set(\"lastName\",lastName)\r",
+							"\r",
+							"var price = pm.variables.replaceIn(\"{{$randomInt}}\")\r",
+							"console.log(\"Price Value:  \"+ price)\r",
+							"pm.environment.set(\"price\",price)\r",
+							"\r",
+							"var paid = pm.variables.replaceIn(\"{{$randomBoolean}}\")\r",
+							"console.log(\"Deposit paid Value:  \"+ paid)\r",
+							"pm.environment.set(\"paid\",paid)\r",
+							"\r",
+							"const moment = require('moment')\r",
+							"const today = moment()\r",
+							"console.log(today.format(\"YYYY-MM-DD\"))\r",
+							"pm.environment.set(\"checkin\",today.add(1,'d').format(\"YYYY-MM-DD\"))\r",
+							"\r",
+							"pm.environment.set(\"checkout\",today.add(5,'d').format(\"YYYY-MM-DD\"))\r",
+							"\r",
+							"var needs = pm.variables.replaceIn(\"{{$randomJobArea}}\")\r",
+							"console.log(\"Additional need Value:  \"+ needs)\r",
+							"pm.environment.set(\"needs\",needs)\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"firstname\" : \"{{firstName}}\",\r\n\t\"lastname\" : \"{{lastName}}\",\r\n\t\"totalprice\" : {{price}},\r\n\t\"depositpaid\" : {{paid}},\r\n\t\"bookingdates\" : {\r\n    \t\"checkin\" : \"{{checkin}}\",\r\n    \t\"checkout\" : \"{{checkout}}\"\r\n\t},\r\n\t\"additionalneeds\" : \"{{needs}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/booking/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"booking",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var ststuscode = pm.response.code\r",
+							"console.log(ststuscode)\r",
+							"\r",
+							"if(ststuscode==200){\r",
+							"var jsonData = pm.response.json()\r",
+							"pm.test(\"Status code is 200\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var code = pm.response.code\r",
+							"console.log(code)\r",
+							"pm.test(\"Firstname Validate\", function(){\r",
+							"    pm.expect(jsonData.firstname).to.eql(pm.environment.get(\"firstName\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Lastname Validate\", function(){\r",
+							"    pm.expect(jsonData.lastname).to.eql(pm.environment.get(\"lastName\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Price Validate\", function(){\r",
+							"    pm.expect(jsonData.totalprice).to.eql(parseInt(pm.environment.get(\"price\")));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Deposit paid Validate\", function(){\r",
+							"    pm.expect(String(jsonData.depositpaid)).to.eql((pm.environment.get(\"paid\")));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date Validate\", function(){\r",
+							"    pm.expect(jsonData.bookingdates.checkin).to.eql(pm.environment.get(\"checkin\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Date Validate\", function(){\r",
+							"    pm.expect(jsonData.bookingdates.checkout).to.eql(pm.environment.get(\"checkout\"));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Additional Need Validate\", function(){\r",
+							"    pm.expect(jsonData.additionalneeds).to.eql((pm.environment.get(\"needs\")));\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==404){\r",
+							"\r",
+							"    pm.test(\"Not Found\", function(){\r",
+							"    pm.response.to.have.status(404);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==200){\r",
+							"\r",
+							"    pm.test(\"OK\", function(){\r",
+							"    pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==201){\r",
+							"\r",
+							"    pm.test(\"Created\", function(){\r",
+							"    pm.response.to.have.status(201);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==202){\r",
+							"\r",
+							"    pm.test(\"Accepted\", function(){\r",
+							"    pm.response.to.have.status(202);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==400){\r",
+							"\r",
+							"    pm.test(\"Bad Request\", function(){\r",
+							"    pm.response.to.have.status(400);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==401){\r",
+							"\r",
+							"    pm.test(\"Unauthorized\", function(){\r",
+							"    pm.response.to.have.status(401);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==403){\r",
+							"\r",
+							"    pm.test(\"Fordidden\", function(){\r",
+							"    pm.response.to.have.status(403);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==405){\r",
+							"\r",
+							"    pm.test(\"Method Not Allowed\", function(){\r",
+							"    pm.response.to.have.status(405);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==500){\r",
+							"\r",
+							"    pm.test(\"Internal Server Error\", function(){\r",
+							"    pm.response.to.have.status(500);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==501){\r",
+							"\r",
+							"    pm.test(\"Not Implimented\", function(){\r",
+							"    pm.response.to.have.status(501);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==502){\r",
+							"\r",
+							"    pm.test(\"Bad Gateway\", function(){\r",
+							"    pm.response.to.have.status(502);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else if(ststuscode==503){\r",
+							"\r",
+							"    pm.test(\"Service Unavailable\", function(){\r",
+							"    pm.response.to.have.status(503);\r",
+							"    });\r",
+							"}\r",
+							"\r",
+							"else{\r",
+							"    pm.test(\"Something Else!!!!\")\r",
+							"}\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/booking/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"booking",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token={{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/booking/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"booking",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

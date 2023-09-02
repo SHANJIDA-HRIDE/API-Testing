@@ -1,0 +1,10 @@
+newman run Practise.postman_collection.json -e Practise.postman_environment.json
+
+
+First Report 
+
+newman run Practise.postman_collection.json -e Practise.postman_environment.json -r cli,html
+
+Second  Report
+
+newman run Practise.postman_collection.json -e Practise.postman_environment.json -r cli,htmlextra
