@@ -465,3 +465,22 @@ npm install -g newman-reporter-htmlextra
 	 <img src="https://github.com/SHANJIDA-HRIDE/API-Testing/assets/62147630/e938d3f9-207c-47e0-a789-819f113a41b7"/>
 	 <img src="https://github.com/SHANJIDA-HRIDE/API-Testing/assets/62147630/eb6e220b-892d-45ef-9ca0-10b55c648e64"/>
  </p>
+
+ ## 🚀 About Me
+I'm a QA Engineer
+## 🔗 Links
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/shanjida-hride-b38222173/)
+## Related
+
+Here are some related projects
+
+#
+🚀[NagadHut TestCase](https://github.com/SHANJIDA-HRIDE/NagadHut_TestCase)
+#
+💬[Test-Case-AIUB-Banking-Management-System](https://github.com/SHANJIDA-HRIDE/Test-Case-AIUB-Banking-Management-System)
+#
+📫[API-Testing-with-Postman](https://github.com/SHANJIDA-HRIDE/API-Testing-with-Postman)
+
+## Feedback
+
+If you have any feedback, please reach out to us at shanjidahride1997@gmail.com
