@@ -458,10 +458,10 @@ npm install -g newman-reporter-htmlextra
 
 - #### Newman File htmlextra
  <p align="center">
-  <img src="https://github.com/SHANJIDA-HRIDE/API-Testing-with-Postman/assets/62147630/03353ac2-38ce-4e4e-86f0-cb47439efc0a"/>
- <img src="https://github.com/SHANJIDA-HRIDE/API-Testing-with-Postman/assets/62147630/914a4944-b488-4ff5-bdad-56fe5c22b0d2"/>
- <img src="https://github.com/SHANJIDA-HRIDE/API-Testing-with-Postman/assets/62147630/d684ba12-f2d1-4888-a6b7-9946c1a0757e"/>
-  <img src="https://github.com/SHANJIDA-HRIDE/API-Testing-with-Postman/assets/62147630/db9a87fe-fc49-4a5a-870e-554b11139f85"/>
-  <img src="https://github.com/SHANJIDA-HRIDE/API-Testing-with-Postman/assets/62147630/9e7d6f07-4f43-416e-9b4e-3e62a36fb010"/>
-    <img src="https://github.com/SHANJIDA-HRIDE/API-Testing-with-Postman/assets/62147630/ced1cb77-1461-40cb-9fb4-619c332712ce"/>
-    <img src="https://github.com/SHANJIDA-HRIDE/API-Testing-with-Postman/assets/62147630/0d7d4b6d-70f3-4ba4-80f6-02c7a1c05758"/></p>
+	 <img src="https://github.com/SHANJIDA-HRIDE/API-Testing/assets/62147630/46299173-ee26-45c2-b534-62e3cccce636"/>
+	 <img src="https://github.com/SHANJIDA-HRIDE/API-Testing/assets/62147630/58d92bec-9538-46b6-b56f-2bb42bac130d"/>
+	 <img src="https://github.com/SHANJIDA-HRIDE/API-Testing/assets/62147630/a771c8c0-630d-4f52-b571-ed01ac926e65"/>
+	 <img src="https://github.com/SHANJIDA-HRIDE/API-Testing/assets/62147630/439b6ae9-278a-4ca8-a6a5-b59c59f6a7cf"/>
+	 <img src="https://github.com/SHANJIDA-HRIDE/API-Testing/assets/62147630/e938d3f9-207c-47e0-a789-819f113a41b7"/>
+	 <img src="https://github.com/SHANJIDA-HRIDE/API-Testing/assets/62147630/eb6e220b-892d-45ef-9ca0-10b55c648e64"/>
+ </p>
